@@ -307,6 +307,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	Write-Verbose -Message ([WinAPI.GetStrings]::GetString(12612)) -Verbose
 	Write-Information -MessageData "" -InformationAction Continue
 
+<#
 	# Remove IP addresses from hosts file that block Microsoft recourses added by WindowsSpyBlocker
 	# https://github.com/crazy-max/WindowsSpyBlocker
 	try
@@ -401,6 +402,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		Write-Warning -Message ($Localization.NoResponse -f "https://github.com")
 		Write-Error -Message ($Localization.NoResponse -f "https://github.com") -ErrorAction SilentlyContinue
 	}
+#>
 
 	# Checking whether Windows Feature Experience Pack was removed by harmful tweakers
 	if (-not (Get-AppxPackage -Name MicrosoftWindows.Client.CBS))
@@ -4987,7 +4989,7 @@ function WindowsFeatures
 		"Printing-XPSServices-Features",
 
 		# Recall
-		"Recall"
+		"Recall",
 
 		# Work Folders Client
 		"WorkFolders-Client"
