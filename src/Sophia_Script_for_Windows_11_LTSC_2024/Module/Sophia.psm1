@@ -767,11 +767,13 @@ public extern static string BrandingFormatString(string sFormat);
 		Start-Process -FilePath "https://www.outsidethebox.ms/19318"
 	}
 
+<#
 	# Automatically manage paging file size for all drives
 	if (-not (Get-CimInstance -ClassName CIM_ComputerSystem).AutomaticManagedPageFile)
 	{
 		Get-CimInstance -ClassName CIM_ComputerSystem | Set-CimInstance -Property @{AutomaticManagedPageFile = $true}
 	}
+#>
 
 	# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 	# https://github.com/PowerShell/PowerShell/issues/21070
@@ -4614,6 +4616,108 @@ function Win32LongPathLimit
 		"Enable"
 		{
 			New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Last access time of NTFS
+
+	.PARAMETER Disable
+	Disable last access time of NTFS
+
+	.PARAMETER Enable
+	Enable last access time of NTFS
+
+	.EXAMPLE
+	LastAccessTime -Disable
+
+	.EXAMPLE
+	LastAccessTime -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function LastAccessTime
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000001 -Force
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000002 -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	8dot3 name creation of NTFS
+
+	.PARAMETER Disable
+	Disable 8dot3 name creation of NTFS
+
+	.PARAMETER Enable
+	Enable 8dot3 name creation of NTFS
+
+	.EXAMPLE
+	8dot3Name -Disable
+
+	.EXAMPLE
+	8dot3Name -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function 8dot3Name
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 1
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 2
 		}
 	}
 }
@@ -12414,6 +12518,58 @@ function LocalSecurityAuthority
 #endregion Microsoft Defender & Security
 
 #region Context menu
+<#
+	.SYNOPSIS
+	The Windows 11 new context menu
+
+	.PARAMETER Disable
+	Disable the Windows 11 new context menu
+
+	.PARAMETER Enable
+	Enable the Windows 11 new context menu
+
+	.EXAMPLE
+	Win11NewContextMenu -Disable
+
+	.EXAMPLE
+	Win11NewContextMenu -Enable
+
+	.NOTES
+	Current user
+#>
+function Win11NewContextMenu
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Force
+			Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Name "(default)" -Value "" -Force
+		}
+		"Enable"
+		{
+			Remove-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Recurse -Force -ErrorAction Ignore
+		}
+	}
+}
+
 <#
 	.SYNOPSIS
 	The "Extract all" item in the Windows Installer (.msi) context menu

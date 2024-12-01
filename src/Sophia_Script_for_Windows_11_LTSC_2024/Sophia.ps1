@@ -617,6 +617,22 @@ Win32LongPathLimit -Disable
 # Включить ограничение Windows на 260 символов в пути (значение по умолчанию)
 # Win32LongPathLimit -Enable
 
+# Disable last access time of NTFS
+# 禁用最后访问时间
+LastAccessTime -Disable
+
+# Enable last access time of NTFS (default value)
+# 启用最后访问时间（默认值）
+# LastAccessTime -Enable
+
+# Disable 8dot3 name creation of NTFS
+# 禁用8.3文件名
+8dot3Name -Disable
+
+# Enable 8dot3 name creation of NTFS (default value)
+# 启用8.3文件名（默认值）
+# 8dot3Name -Enable
+
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
 BSoDStopError -Enable
@@ -1183,6 +1199,14 @@ DNSoverHTTPS -Disable
 #endregion Microsoft Defender & Security
 
 #region Context menu
+# Disable the Windows 11 new context menu
+# 禁用 Windows 11 新版右键菜单
+Win11NewContextMenu -Disable
+
+# Enable the Windows 11 new context menu (default value)
+# 启用 Windows 11 新版右键菜单（默认值）
+# Win11NewContextMenu -Enable
+
 # Show the "Extract all" item in the Windows Installer (.msi) context menu
 # Отобразить пункт "Извлечь все" в контекстное меню Windows Installer (.msi)
 MSIExtractContext -Show
