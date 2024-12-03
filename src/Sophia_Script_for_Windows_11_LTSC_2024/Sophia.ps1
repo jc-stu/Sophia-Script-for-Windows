@@ -363,6 +363,30 @@ OpenFileExplorerTo -ThisPC
 # Включить компактный вид проводника
 FileExplorerCompactMode -Enable
 
+# Do not show home in File Explorer navigation pane
+# 导航栏不显示主文件夹
+HomeNavigation -Hide
+
+# Show home in File Explorer navigation pane (default value)
+# 导航栏显示主文件夹（默认值）
+# HomeNavigation -Show
+
+# Do not show gallery in File Explorer navigation pane
+# 导航栏不显示图库
+GalleryNavigation -Hide
+
+# Show gallery in File Explorer navigation pane (default value)
+# 导航栏显示图库（默认值）
+# GalleryNavigation -Show
+
+# Do not show duplicate removable drives in File Explorer navigation pane
+# 导航栏不显示重复的可移动硬盘
+DuplicateDrives -Hide
+
+# Show duplicate removable drives in File Explorer navigation pane (default value)
+# 导航栏显示重复的可移动硬盘（默认值）
+# DuplicateDrives -Show
+
 # Do not show sync provider notification within File Explorer
 # Не показывать уведомления поставщика синхронизации в проводнике
 OneDriveFileExplorerAd -Hide
@@ -373,11 +397,11 @@ OneDriveFileExplorerAd -Hide
 
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
-SnapAssist -Disable
+# SnapAssist -Disable
 
 # When I snap a window, show what I can snap next to it (default value)
 # При прикреплении окна показывать, что можно прикрепить рядом с ним (значение по умолчанию)
-# SnapAssist -Enable
+SnapAssist -Enable
 
 # Show the file transfer dialog box in the detailed mode
 # Отображать диалоговое окно передачи файлов в развернутом виде
@@ -733,19 +757,19 @@ WindowsLatestUpdate -Disable
 
 # Set power plan on "High performance". It isn't recommended to turn on for laptops
 # Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
-PowerPlan -High
+# PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
-# PowerPlan -Balanced
+PowerPlan -Balanced
 
 # Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
 # Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
-NetworkAdaptersSavePower -Disable
+# NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
 # Разрешить отключение всех сетевых адаптеров для экономии энергии (значение по умолчанию)
-# NetworkAdaptersSavePower -Enable
+NetworkAdaptersSavePower -Enable
 
 # Override for default input method: English
 # Переопределить метод ввода по умолчанию: английский
@@ -960,7 +984,7 @@ NetworkDiscovery -Disable
 
 # List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
-PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
+# PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)

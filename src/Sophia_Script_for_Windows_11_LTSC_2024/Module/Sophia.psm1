@@ -2708,6 +2708,199 @@ function FileExplorerCompactMode
 
 <#
 	.SYNOPSIS
+	Home in File Explorer navigation pane
+
+	.PARAMETER Hide
+	Do not show home in File Explorer navigation pane
+
+	.PARAMETER Show
+	Show home in File Explorer navigation pane
+
+	.EXAMPLE
+	HomeNavigation -Hide
+
+	.EXAMPLE
+	HomeNavigation -Show
+
+	.NOTES
+	Current user
+#>
+function HomeNavigation
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	$ShowHomeOptionPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowHome"
+	if (-not (Test-Path $ShowHomeOptionPath)) {
+		New-Item -Path $ShowHomeOptionPath -Force
+	}
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "CheckedValue" -Value 1
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "DefaultValue" -Value 0
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "HKeyRoot" -Value 0x80000001
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "Id" -Value 0xd
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "RegPath" -Value "Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "Text" -Value "Show Home"
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "Type" -Value "checkbox"
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "UncheckedValue" -Value 0
+	Set-ItemProperty -Path $ShowHomeOptionPath -Name "ValueName" -Value "System.IsPinnedToNameSpaceTree"
+
+	$HomeKeyPath = "HKCU:\Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			if (-not (Test-Path $HomeKeyPath)) {
+				New-Item -Path $HomeKeyPath -Force
+			}
+			Set-ItemProperty -Path $HomeKeyPath -Name "System.IsPinnedToNameSpaceTree" -Value 0 -Force
+		}
+		"Show"
+		{
+			Remove-Item -Path $HomeKeyPath -Recurse -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Gallery in File Explorer navigation pane
+
+	.PARAMETER Hide
+	Do not show gallery in File Explorer navigation pane
+
+	.PARAMETER Show
+	Show gallery in File Explorer navigation pane
+
+	.EXAMPLE
+	GalleryNavigation -Hide
+
+	.EXAMPLE
+	GalleryNavigation -Show
+
+	.NOTES
+	Current user
+#>
+function GalleryNavigation
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	$ShowGalleryOptionPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery"
+	if (-not (Test-Path $ShowGalleryOptionPath)) {
+		New-Item -Path $ShowGalleryOptionPath -Force
+	}
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "CheckedValue" -Value 1
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "DefaultValue" -Value 0
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "HKeyRoot" -Value 0x80000001
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "Id" -Value 0xd
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "RegPath" -Value "Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "Text" -Value "Show Gallery"
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "Type" -Value "checkbox"
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "UncheckedValue" -Value 0
+	Set-ItemProperty -Path $ShowGalleryOptionPath -Name "ValueName" -Value "System.IsPinnedToNameSpaceTree"
+
+	$GalleryKeyPath = "HKCU:\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			if (-not (Test-Path $GalleryKeyPath)) {
+				New-Item -Path $GalleryKeyPath -Force
+			}
+			Set-ItemProperty -Path $GalleryKeyPath -Name "System.IsPinnedToNameSpaceTree" -Value 0 -Force
+		}
+		"Show"
+		{
+			Remove-Item -Path $GalleryKeyPath -Recurse -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Hide
+	Do not show duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Show
+	Show duplicate removable drives in File Explorer navigation pane
+
+	.EXAMPLE
+	DuplicateDrives -Hide
+
+	.EXAMPLE
+	DuplicateDrives -Show
+
+	.NOTES
+	Current user
+#>
+function DuplicateDrives
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	$RemovableDrivesPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}"
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			Remove-Item -Path $RemovableDrivesPath -Recurse -Force
+		}
+		"Show"
+		{
+			if (-not (Test-Path $RemovableDrivesPath)) {
+				New-Item -Path $RemovableDrivesPath -Force
+			}
+			Set-ItemProperty -Path $RemovableDrivesPath -Name "(Default)" -Value "Removable Drives" -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
 	Sync provider notification in File Explorer
 
 	.PARAMETER Hide
@@ -12557,17 +12750,19 @@ function Win11NewContextMenu
 		[switch]
 		$Enable
 	)
-
+	$ContextMenuPath = "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32"
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Disable"
 		{
-			New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Force
-			Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Name "(default)" -Value "" -Force
+			if (-not (Test-Path $ContextMenuPath)) {
+				New-Item -Path $ContextMenuPath -Force
+			}
+			Set-ItemProperty -Path $ContextMenuPath -Name "(default)" -Value "" -Force
 		}
 		"Enable"
 		{
-			Remove-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Recurse -Force -ErrorAction Ignore
+			Remove-Item -Path $ContextMenuPath -Recurse -Force -ErrorAction Ignore
 		}
 	}
 }
