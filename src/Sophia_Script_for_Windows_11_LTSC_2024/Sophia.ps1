@@ -667,11 +667,11 @@ BSoDStopError -Enable
 
 # Choose when to be notified about changes to your computer: never notify
 # Настройка уведомления об изменении параметров компьютера: никогда не уведомлять
-# AdminApprovalMode -Never
+AdminApprovalMode -Never
 
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
-AdminApprovalMode -Default
+# AdminApprovalMode -Default
 
 # Turn off Delivery Optimization
 # Выключить оптимизацию доставки
@@ -765,11 +765,11 @@ PowerPlan -Balanced
 
 # Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
 # Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
-# NetworkAdaptersSavePower -Disable
+NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
 # Разрешить отключение всех сетевых адаптеров для экономии энергии (значение по умолчанию)
-NetworkAdaptersSavePower -Enable
+# NetworkAdaptersSavePower -Enable
 
 # Override for default input method: English
 # Переопределить метод ввода по умолчанию: английский
