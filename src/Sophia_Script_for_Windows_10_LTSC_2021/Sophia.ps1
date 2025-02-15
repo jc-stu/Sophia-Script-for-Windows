@@ -157,11 +157,11 @@ InitialActions -Warning
 
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
-# Logging
+Logging
 
 # Create a restore point
 # Создать точку восстановления
-CreateRestorePoint
+# CreateRestorePoint
 #endregion Protection
 
 #region Privacy & Telemetry
@@ -305,11 +305,11 @@ OpenFileExplorerTo -ThisPC
 
 # Expand File Explorer ribbon
 # Развернуть ленту проводника
-FileExplorerRibbon -Expanded
+# FileExplorerRibbon -Expanded
 
 # Minimize File Explorer ribbon (default value)
 # Свернуть ленту проводника (значение по умолчанию)
-# FileExplorerRibbon -Minimized
+FileExplorerRibbon -Minimized
 
 # Do not show sync provider notification within File Explorer
 # Не показывать уведомления поставщика синхронизации в проводнике
@@ -321,11 +321,11 @@ OneDriveFileExplorerAd -Hide
 
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
-SnapAssist -Disable
+# SnapAssist -Disable
 
 # When I snap a window, show what I can snap next to it (default value)
 # При прикреплении окна показывать, что можно прикрепить рядом с ним (значение по умолчанию)
-# SnapAssist -Enable
+SnapAssist -Enable
 
 # Show the file transfer dialog box in the detailed mode
 # Отображать диалоговое окно передачи файлов в развернутом виде
@@ -345,7 +345,7 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide user folders in "This PC"
 # Скрыть пользовательские папки в "Этот компьютер"
-# UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
+UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
 # Show user folders in "This PC" (default value)
 # Отобразить пользовательские папки в "Этот компьютер" (значение по умолчанию)
@@ -405,11 +405,11 @@ WindowsInkWorkspace -Hide
 
 # Always show all icons in the notification area
 # Всегда отображать все значки в области уведомлений
-NotificationAreaIcons -Show
+# NotificationAreaIcons -Show
 
 # Hide all icons in the notification area (default value)
 # Скрыть все значки в области уведомлений (значение по умолчанию)
-# NotificationAreaIcons -Hide
+NotificationAreaIcons -Hide
 
 # Show seconds on the taskbar clock
 # Отобразить секунды в системных часах на панели задач
@@ -525,7 +525,7 @@ AeroShaking -Enable
 
 # Download and install free dark "Windows 11 Cursors Concept v2" cursors from Jepri Creations
 # Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
-Cursors -Dark
+# Cursors -Dark
 
 # Download and install free light "Windows 11 Cursors Concept v2" cursors from Jepri Creations
 # Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
@@ -576,6 +576,22 @@ Win32LongPathLimit -Disable
 # Enable the Windows 260 character path limit (default value)
 # Включить ограничение Windows на 260 символов в пути (значение по умолчанию)
 # Win32LongPathLimit -Enable
+
+# Disable last access time of NTFS
+# 禁用最后访问时间
+LastAccessTime -Disable
+
+# Enable last access time of NTFS (default value)
+# 启用最后访问时间（默认值）
+# LastAccessTime -Enable
+
+# Disable 8dot3 name creation of NTFS
+# 禁用8.3文件名
+8dot3Name -Disable
+
+# Enable 8dot3 name creation of NTFS (default value)
+# 启用8.3文件名（默认值）
+# 8dot3Name -Enable
 
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
@@ -669,11 +685,11 @@ ActiveHours -Automatically
 
 # Set power plan on "High performance". It isn't recommended to turn on for laptops
 # Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
-PowerPlan -High
+# PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
-# PowerPlan -Balanced
+PowerPlan -Balanced
 
 # Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
 # Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
@@ -700,7 +716,7 @@ InputMethod -English
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-Set-UserShellFolderLocation -Root
+# Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
@@ -726,19 +742,19 @@ Set-UserShellFolderLocation -Root
 
 # Use the latest installed .NET runtime for all apps
 # Использовать последнюю установленную среду выполнения .NET для всех приложений
-LatestInstalled.NET -Enable
+# LatestInstalled.NET -Enable
 
 # Do not use the latest installed .NET runtime for all apps (default value)
 # Не использовать последнюю установленную версию .NET для всех приложений (значение по умолчанию)
-# LatestInstalled.NET -Disable
+LatestInstalled.NET -Disable
 
 # Save screenshots by pressing Win+PrtScr on the Desktop
 # Сохранять скриншоты по нажатию Win+PrtScr на рабочий стол
-WinPrtScrFolder -Desktop
+# WinPrtScrFolder -Desktop
 
 # Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
 # Cохранять скриншоты по нажатию Win+PrtScr в папку "Изображения" (значение по умолчанию)
-# WinPrtScrFolder -Default
+WinPrtScrFolder -Default
 
 <#
 	Run troubleshooter automatically, then notify me
@@ -747,7 +763,7 @@ WinPrtScrFolder -Desktop
 	Автоматически запускать средства устранения неполадок, а затем уведомлять
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
 #>
-RecommendedTroubleshooting -Automatically
+# RecommendedTroubleshooting -Automatically
 
 <#
 	Ask me before running troubleshooter (default value)
@@ -756,7 +772,7 @@ RecommendedTroubleshooting -Automatically
 	Спрашивать перед запуском средств устранения неполадок (значение по умолчанию)
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
 #>
-# RecommendedTroubleshooting -Default
+RecommendedTroubleshooting -Default
 
 # Launch folder windows in a separate process
 # Запускать окна с папками в отдельном процессе
@@ -824,19 +840,19 @@ ThumbnailCacheRemoval -Disable
 
 # Automatically saving my restartable apps when signing out and restart them after signing in
 # Автоматически сохранять мои перезапускаемые приложения при выходе из системы и перезапускать их при повторном входе
-SaveRestartableApps -Enable
+# SaveRestartableApps -Enable
 
 # Turn off automatically saving my restartable apps when signing out and restart them after signing in (default value)
 # Выключить автоматическое сохранение моих перезапускаемых приложений при выходе из системы и перезапускать их после выхода (значение по умолчанию)
-# SaveRestartableApps -Disable
+SaveRestartableApps -Disable
 
 # Enable "Network Discovery" and "File and Printers Sharing" for workgroup networks
 # Включить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп
-NetworkDiscovery -Enable
+# NetworkDiscovery -Enable
 
 # Disable "Network Discovery" and "File and Printers Sharing" for workgroup networks (default value)
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
-# NetworkDiscovery -Disable
+NetworkDiscovery -Disable
 
 <#
 	Register app, calculate hash, and associate with an extension with the "How do you want to open this" pop-up hidden
@@ -867,7 +883,7 @@ NetworkDiscovery -Enable
 
 	https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 #>
-InstallVCRedist
+# InstallVCRedist
 
 <#
 	Install the latest .NET Desktop Runtime 6, 8 x64
@@ -875,12 +891,12 @@ InstallVCRedist
 
 	https://dotnet.microsoft.com/en-us/download/dotnet
 #>
-InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
+# InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
 # https://antizapret.prostovpn.org
-RKNBypass -Enable
+# RKNBypass -Enable
 
 # Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)
 # Выключить проксирование только заблокированных сайтов из единого реестра Роскомнадзора (значение по умолчанию)
@@ -889,7 +905,7 @@ RKNBypass -Enable
 
 # List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
-PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
+# PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
@@ -947,7 +963,7 @@ AppSuggestions -Hide
 	Закрепить на начальном экране следующие ярлыки: Панель управления, Устройства и принтеры
 	Валидные значения ярлыков: ControlPanel и DevicesPrinters
 #>
-PinToStart -Tiles ControlPanel, DevicesPrinters
+# PinToStart -Tiles ControlPanel, DevicesPrinters
 
 # Unpin all tiles first and pin necessary ones
 # Открепить все ярлыки сначала и закрепить необходимые
@@ -1021,27 +1037,27 @@ TempTask -Register
 #region Microsoft Defender & Security
 # Enable Microsoft Defender Exploit Guard network protection
 # Включить защиту сети в Microsoft Defender Exploit Guard
-NetworkProtection -Enable
+# NetworkProtection -Enable
 
 # Disable Microsoft Defender Exploit Guard network protection (default value)
 # Выключить защиту сети в Microsoft Defender Exploit Guard (значение по умолчанию)
-# NetworkProtection -Disable
+NetworkProtection -Disable
 
 # Enable detection for potentially unwanted applications and block them
 # Включить обнаружение потенциально нежелательных приложений и блокировать их
-PUAppsDetection -Enable
+# PUAppsDetection -Enable
 
 # Disable detection for potentially unwanted applications and block them (default value)
 # Выключить обнаружение потенциально нежелательных приложений и блокировать их (значение по умолчанию)
-# PUAppsDetection -Disable
+PUAppsDetection -Disable
 
 # Enable sandboxing for Microsoft Defender
 # Включить песочницу для Microsoft Defender
-DefenderSandbox -Enable
+# DefenderSandbox -Enable
 
 # Disable sandboxing for Microsoft Defender (default value)
 # Выключить песочницу для Microsoft Defender (значение по умолчанию)
-# DefenderSandbox -Disable
+DefenderSandbox -Disable
 
 # Dismiss Microsoft Defender offer in the Windows Security about signing in Microsoft account
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" о входе в аккаунт Microsoft
@@ -1114,11 +1130,11 @@ SaveZoneInformation -Disable
 	Включить DNS-over-HTTPS для IPv4
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
-DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+# DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
-# DNSoverHTTPS -Disable
+DNSoverHTTPS -Disable
 
 # Enable DNS-over-HTTPS via Comss.one DNS server. Applicable for Russia only
 # Включить DNS-over-HTTPS для IPv4 через DNS-сервер Comss.one. Применимо только для России
