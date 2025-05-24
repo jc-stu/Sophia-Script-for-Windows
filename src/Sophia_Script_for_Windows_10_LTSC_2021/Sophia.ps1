@@ -855,11 +855,11 @@ ThumbnailCacheRemoval -Disable
 
 # Automatically saving my restartable apps when signing out and restart them after signing in
 # Автоматически сохранять мои перезапускаемые приложения при выходе из системы и перезапускать их при повторном входе
-# SaveRestartableApps -Enable
+SaveRestartableApps -Enable
 
 # Turn off automatically saving my restartable apps when signing out and restart them after signing in (default value)
 # Выключить автоматическое сохранение моих перезапускаемых приложений при выходе из системы и перезапускать их после выхода (значение по умолчанию)
-SaveRestartableApps -Disable
+# SaveRestartableApps -Disable
 
 # Enable "Network Discovery" and "File and Printers Sharing" for workgroup networks
 # Включить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп

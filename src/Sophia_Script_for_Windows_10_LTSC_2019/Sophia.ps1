@@ -170,11 +170,11 @@ InitialActions -Warning
 
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
-# Logging
+Logging
 
 # Create a restore point
 # Создать точку восстановления
-CreateRestorePoint
+# CreateRestorePoint
 #endregion Protection
 
 #region Privacy & Telemetry
@@ -294,19 +294,19 @@ OpenFileExplorerTo -ThisPC
 
 # Expand File Explorer ribbon
 # Развернуть ленту проводника
-FileExplorerRibbon -Expanded
+# FileExplorerRibbon -Expanded
 
 # Minimize File Explorer ribbon (default value)
 # Свернуть ленту проводника (значение по умолчанию)
-# FileExplorerRibbon -Minimized
+FileExplorerRibbon -Minimized
 
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
-SnapAssist -Disable
+# SnapAssist -Disable
 
 # When I snap a window, show what I can snap next to it (default value)
 # При прикреплении окна показывать, что можно прикрепить рядом с ним (значение по умолчанию)
-# SnapAssist -Enable
+SnapAssist -Enable
 
 # Show the file transfer dialog box in the detailed mode
 # Отображать диалоговое окно передачи файлов в развернутом виде
@@ -326,8 +326,7 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide user folders in "This PC"
 # Скрыть пользовательские папки в "Этот компьютер"
-UserFolders -ThreeDObjects Hide
-# UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
+UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
 # Show user folders in "This PC" (default value)
 # Отобразить пользовательские папки в "Этот компьютер" (значение по умолчанию)
@@ -379,11 +378,11 @@ PeopleTaskbar -Hide
 
 # Always show all icons in the notification area
 # Всегда отображать все значки в области уведомлений
-NotificationAreaIcons -Show
+# NotificationAreaIcons -Show
 
 # Hide all icons in the notification area (default value)
 # Скрыть все значки в области уведомлений (значение по умолчанию)
-# NotificationAreaIcons -Hide
+NotificationAreaIcons -Hide
 
 # Show seconds on the taskbar clock
 # Отобразить секунды в системных часах на панели задач
@@ -484,7 +483,7 @@ AppsLanguageSwitch -Enable
 # Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations
 # Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations
 # https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
-Cursors -Dark
+# Cursors -Dark
 
 # Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations
 # Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations
@@ -536,6 +535,22 @@ Win32LongPathLimit -Disable
 # Enable the Windows 260 character path limit (default value)
 # Включить ограничение Windows на 260 символов в пути (значение по умолчанию)
 # Win32LongPathLimit -Enable
+
+# Disable last access time of NTFS
+# 禁用最后访问时间
+LastAccessTime -Disable
+
+# Enable last access time of NTFS (default value)
+# 启用最后访问时间（默认值）
+# LastAccessTime -Enable
+
+# Disable 8dot3 name creation of NTFS
+# 禁用8.3文件名
+8dot3Name -Disable
+
+# Enable 8dot3 name creation of NTFS (default value)
+# 启用8.3文件名（默认值）
+# 8dot3Name -Enable
 
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
@@ -620,11 +635,11 @@ ActiveHours -Automatically
 
 # Set power plan on "High performance". Not recommended for laptops
 # Установить схему управления питанием на "Высокая производительность". Не рекомендуется для ноутбуков
-PowerPlan -High
+# PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
-# PowerPlan -Balanced
+PowerPlan -Balanced
 
 # Do not allow the computer to turn off the network adapters to save power. Not recommended for laptops
 # Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется для ноутбуков
@@ -651,7 +666,7 @@ InputMethod -English
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-Set-UserShellFolderLocation -Root
+# Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
@@ -677,19 +692,19 @@ Set-UserShellFolderLocation -Root
 
 # Use the latest installed .NET runtime for all apps
 # Использовать последнюю установленную среду выполнения .NET для всех приложений
-LatestInstalled.NET -Enable
+# LatestInstalled.NET -Enable
 
 # Do not use the latest installed .NET runtime for all apps (default value)
 # Не использовать последнюю установленную версию .NET для всех приложений (значение по умолчанию)
-# LatestInstalled.NET -Disable
+LatestInstalled.NET -Disable
 
 # Save screenshots by pressing Win+PrtScr on the Desktop
 # Сохранять скриншоты по нажатию Win+PrtScr на рабочий стол
-WinPrtScrFolder -Desktop
+# WinPrtScrFolder -Desktop
 
 # Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
 # Cохранять скриншоты по нажатию Win+PrtScr в папку "Изображения" (значение по умолчанию)
-# WinPrtScrFolder -Default
+WinPrtScrFolder -Default
 
 # Launch folder windows in a separate process
 # Запускать окна с папками в отдельном процессе
@@ -749,11 +764,11 @@ ThumbnailCacheRemoval -Disable
 
 # Enable "Network Discovery" and "File and Printers Sharing" for workgroup networks
 # Включить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп
-NetworkDiscovery -Enable
+# NetworkDiscovery -Enable
 
 # Disable "Network Discovery" and "File and Printers Sharing" for workgroup networks (default value)
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
-# NetworkDiscovery -Disable
+NetworkDiscovery -Disable
 
 <#
 	Register app, calculate hash, and associate with an extension with the "How do you want to open this" pop-up hidden
@@ -779,16 +794,17 @@ NetworkDiscovery -Enable
 # Import-Associations
 
 # Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
-Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
+# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+# Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
 # Install the latest .NET Desktop Runtime 8, 9 x64
-#Установить последнюю версию .NET Desktop Runtime 8, 9 x64
-Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
+# Установить последнюю версию .NET Desktop Runtime 8, 9 x64
+# Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
 # https://antizapret.prostovpn.org
-RKNBypass -Enable
+# RKNBypass -Enable
 
 # Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)
 # Выключить проксирование только заблокированных сайтов из единого реестра Роскомнадзора (значение по умолчанию)
@@ -797,7 +813,7 @@ RKNBypass -Enable
 
 # List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
-PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
+# PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
@@ -874,27 +890,27 @@ TempTask -Register
 #region Microsoft Defender & Security
 # Enable Microsoft Defender Exploit Guard network protection
 # Включить защиту сети в Microsoft Defender Exploit Guard
-NetworkProtection -Enable
+# NetworkProtection -Enable
 
 # Disable Microsoft Defender Exploit Guard network protection (default value)
 # Выключить защиту сети в Microsoft Defender Exploit Guard (значение по умолчанию)
-# NetworkProtection -Disable
+NetworkProtection -Disable
 
 # Enable detection for potentially unwanted applications and block them
 # Включить обнаружение потенциально нежелательных приложений и блокировать их
-PUAppsDetection -Enable
+# PUAppsDetection -Enable
 
 # Disable detection for potentially unwanted applications and block them (default value)
 # Выключить обнаружение потенциально нежелательных приложений и блокировать их (значение по умолчанию)
-# PUAppsDetection -Disable
+PUAppsDetection -Disable
 
 # Enable sandboxing for Microsoft Defender
 # Включить песочницу для Microsoft Defender
-DefenderSandbox -Enable
+# DefenderSandbox -Enable
 
 # Disable sandboxing for Microsoft Defender (default value)
 # Выключить песочницу для Microsoft Defender (значение по умолчанию)
-# DefenderSandbox -Disable
+DefenderSandbox -Disable
 
 # Dismiss Microsoft Defender offer in the Windows Security about signing in Microsoft account
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" о входе в аккаунт Microsoft

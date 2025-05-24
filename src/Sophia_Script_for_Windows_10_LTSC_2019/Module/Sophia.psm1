@@ -4331,6 +4331,108 @@ function Win32LongPathLimit
 
 <#
 	.SYNOPSIS
+	Last access time of NTFS
+
+	.PARAMETER Disable
+	Disable last access time of NTFS
+
+	.PARAMETER Enable
+	Enable last access time of NTFS
+
+	.EXAMPLE
+	LastAccessTime -Disable
+
+	.EXAMPLE
+	LastAccessTime -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function LastAccessTime
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000001 -Force
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000002 -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	8dot3 name creation of NTFS
+
+	.PARAMETER Disable
+	Disable 8dot3 name creation of NTFS
+
+	.PARAMETER Enable
+	Enable 8dot3 name creation of NTFS
+
+	.EXAMPLE
+	8dot3Name -Disable
+
+	.EXAMPLE
+	8dot3Name -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function 8dot3Name
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 1
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 2
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
 	Stop error code when BSoD occurs
 
 	.PARAMETER Enable
