@@ -1,4 +1,3 @@
----
 name: Sophia Script 🐛
 description: Report errors or unexpected behavior 🤔
 body:
@@ -20,26 +19,37 @@ body:
     - label: I do not use a homebrew Windows image;
       required: true
     - label: I did not tweak Windows before that could cause system instability;
-      required: true
+      required: false
     - label: If your issue concerns the Wrapper, please mention @BenchTweakGaming in issue
+    - label: Upload you Sophia.ps1 preset file
 - type: textarea
   attributes:
     label: Steps to reproduce
-    description: >
-      Write something :)
-    placeholder: >
-      Paste your Sophia Script preset
+    placeholder:  Write something :)
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Describe the bug
+    description: Write something :)
+    placeholder: Describe the issue you are facing with
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Screenshot with an error
+    placeholder: Paste here a screenshot with an error
   validations:
     required: true
 - type: markdown
   attributes:
     value: |
-      # Device information
+      ## Device information
 - type: input
   attributes:
     label: Windows Version
-    description: Which version of Windows are you using? Press <kbd>Win</kbd> + <kbd>Pause/Break</kbd> to open the page to copy from.
-    placeholder: e.g. Windows 11 21H2 22000.527
+    description: Which version of Windows are you using? Type `winver` in Start menu.
+    placeholder: e.g. Windows 11 24H2 26100.2605
   validations:
     required: true
 - type: input
@@ -47,6 +57,6 @@ body:
   attributes:
     label: Sophia Script version
     description: Which version of Sophia Script are you using?
-    placeholder: e.g. 6.1.4
+    placeholder: e.g. 6.7.3
   validations:
     required: true

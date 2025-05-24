@@ -3,6 +3,7 @@
     "Region": "Protection",
     "Control": "cmb",
     "Required": "true",
+    "RequiredIndex": "0",
     "Function": "InitialActions",
     "Arg": {
       "Zero": {
@@ -896,13 +897,13 @@
     "Region": "UI & Personalization",
     "Control": "cmb",
     "Required": "false",
-    "Function": "HideRecommendedSection",
+    "Function": "StartRecommendedSection",
     "Arg": {
       "Zero": {
-        "Tag": "Disable"
+        "Tag": "Hide"
       },
       "One": {
-        "Tag": "Enable"
+        "Tag": "Show"
       }
     },
     "Preset": "Zero",
@@ -1441,12 +1442,30 @@
   },
   {
     "Region": "System",
-    "Control": "chk",
+    "Control": "tboxtboxtbox",
     "Required": "false",
     "Function": "Set-Association",
+    "Width": "170",
+    "WidthMinus": "35",
+    "MarginMinus": "5",
+    "WidthPlus": "35",
+    "MarginPlus": "5",
+    "WidthOpen": "75",
+    "WidthSave": "100",
+    "MarginSave": "225",
     "Arg": {
       "Zero": {
-        "Tag": ""
+        "Tag": "ProgramPath",
+        "Width": "325"
+      },
+      "One": {
+        "Tag": "Extension",
+        "Width": "85"
+      },
+      "Two": {
+        "Tag": "Icon",
+        "Width": "250",
+        "Number": "1000"
       }
     },
     "Preset": "",
@@ -1485,10 +1504,13 @@
     "Region": "System",
     "Control": "chk",
     "Required": "false",
-    "Function": "InstallVCRedist",
+    "Function": "Install-VCRedist -Redistributables",
     "Arg": {
       "Zero": {
-        "Tag": ""
+        "Tag": "2015_2022_x86"
+      },
+      "One": {
+        "Tag": "2015_2022_x64"
       }
     },
     "Preset": "",
@@ -1499,13 +1521,13 @@
     "Region": "System",
     "Control": "chk",
     "Required": "false",
-    "Function": "InstallDotNetRuntimes -Runtimes",
+    "Function": "Install-DotNetRuntimes -Runtimes",
     "Arg": {
       "Zero": {
-        "Tag": "NET6x64"
+        "Tag": "NET8x64"
       },
       "One": {
-        "Tag": "NET8x64"
+        "Tag": "NET9x64"
       }
     },
     "Preset": "",
@@ -1531,7 +1553,7 @@
   },
   {
     "Region": "System",
-    "Control": "cmb",
+    "Control": "cmbchk",
     "Required": "false",
     "Function": "PreventEdgeShortcutCreation",
     "Arg": {
@@ -1542,25 +1564,28 @@
         "Tag": "Disable"
       }
     },
-    "Preset": "Zero",
-    "WindowsDefault": "One",
-    "LTSC2024": "true"
-  },
-  {
-    "Region": "System",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "SATADrivesRemovableMedia",
-    "Arg": {
+    "Arg2": {
       "Zero": {
-        "Tag": "Disable"
+        "Tag": "Stable",
+        "Width": "75"
       },
       "One": {
-        "Tag": "Default"
+        "Tag": "Beta",
+        "Width": "65"
+      },
+      "Two": {
+        "Tag": "Dev",
+        "Width": "62"
+      },
+      "Three": {
+        "Tag": "Canary",
+        "Width": "80"
       }
     },
     "Preset": "Zero",
     "WindowsDefault": "One",
+    "Preset2": "0123",
+    "WindowsDefault2": "",
     "LTSC2024": "true"
   },
   {
@@ -1616,9 +1641,11 @@
   },
   {
     "Region": "UWP apps",
-    "Control": "chk",
+    "Control": "chkchkalter",
     "Required": "false",
+    "Separate": "true",
     "Function": "UninstallUWPApps",
+    "Function2": "UninstallUWPApps -ForAllUsers",
     "Arg": {
       "Zero": {
         "Tag": ""
@@ -1639,20 +1666,6 @@
       }
     },
     "Preset": "",
-    "WindowsDefault": "",
-    "LTSC2024": "true"
-  },
-  {
-    "Region": "Gaming",
-    "Control": "chk",
-    "Required": "false",
-    "Function": "Set-AppGraphicsPerformance",
-    "Arg": {
-      "Zero": {
-        "Tag": ""
-      }
-    },
-    "Preset": "Zero",
     "WindowsDefault": "",
     "LTSC2024": "true"
   },
@@ -1924,9 +1937,13 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Control": "cmb",
+    "Control": "cmbcmbcmb",
     "Required": "false",
     "Function": "DNSoverHTTPS",
+    "Key": "SYSTEM\\CurrentControlSet\\Services\\Dnscache\\Parameters\\DohWellKnownServers",
+    "PrefixArg2": "PrimaryDNS",
+    "PrefixArg3": "SecondaryDNS",
+    "Arg2_3_Width": "145",
     "Arg": {
       "Zero": {
         "Tag": "Enable"
@@ -1935,8 +1952,52 @@
         "Tag": "Disable"
       }
     },
+    "Arg2": {
+      "Zero": {
+        "Tag": "1.0.0.1"
+      },
+      "One": {
+        "Tag": "1.1.1.1"
+      },
+      "Two": {
+        "Tag": "149.112.112.112"
+      },
+      "Three": {
+        "Tag": "8.8.4.4"
+      },
+      "Four": {
+        "Tag": "8.8.8.8"
+      },
+      "Five": {
+        "Tag": "9.9.9.9"
+      }
+    },
+    "Arg3": {
+      "Zero": {
+        "Tag": "1.0.0.1"
+      },
+      "One": {
+        "Tag": "1.1.1.1"
+      },
+      "Two": {
+        "Tag": "149.112.112.112"
+      },
+      "Three": {
+        "Tag": "8.8.4.4"
+      },
+      "Four": {
+        "Tag": "8.8.8.8"
+      },
+      "Five": {
+        "Tag": "9.9.9.9"
+      }
+    },
     "Preset": "Zero",
     "WindowsDefault": "One",
+    "Preset2": "Zero",
+    "WindowsDefault2": "",
+    "Preset3": "One",
+    "WindowsDefault3": "",
     "LTSC2024": "true"
   },
   {
@@ -2045,7 +2106,7 @@
     "Region": "Update Policies",
     "Control": "chk",
     "Required": "false",
-    "Function": "UpdateLGPEPolicies",
+    "Function": "ScanRegistryPolicies",
     "Arg": {
       "Zero": {
         "Tag": ""

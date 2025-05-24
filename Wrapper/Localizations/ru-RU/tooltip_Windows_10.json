@@ -413,20 +413,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "3DObjects",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть папку \"Объемные объекты\" в \"Этот компьютер\" и панели быстрого доступа."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить папку \"Объемные объекты\" в \"Этот компьютер\" и панели быстрого доступа (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "QuickAccessRecentFiles",
     "Arg": {
       "Zero": {
@@ -529,20 +515,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "PeopleTaskbar",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть панель \"Люди\" на панели задач."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить панель \"Люди\" на панели задач (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "MeetNow",
     "Arg": {
       "Zero": {
@@ -618,19 +590,19 @@
   {
     "Region": "UI & Personalization",
     "Function": "UnpinTaskbarShortcuts -Shortcuts",
-    "ToolTip": "Открепить ярлыки \"Microsoft Edge\", \"Microsoft Store\" или \"Почта\" от панели задач.",
+    "ToolTip": "Открепить ярлыки Microsoft Edge, Microsoft Store или Почта от панели задач.",
     "Arg": {
       "Zero": {
         "Tag": "Edge",
-        "ToolTip": "Открепить ярлык \"Microsoft Edge\" от панели задач."
+        "ToolTip": "Открепить ярлык Microsoft Edge от панели задач."
       },
       "One": {
         "Tag": "Store",
-        "ToolTip": "Открепить ярлык \"Microsoft Store\" от панели задач."
+        "ToolTip": "Открепить ярлык Microsoft Store от панели задач."
       },
       "Two": {
         "Tag": "Mail",
-        "ToolTip": "Открепить ярлык \"Почта\" от панели задач"
+        "ToolTip": "Открепить ярлык Почта от панели задач"
       }
     }
   },
@@ -1368,26 +1340,31 @@
   },
   {
     "Region": "System",
-    "Function": "InstallVCRedist",
+    "Function": "Install-VCRedist -Redistributables",
+    "ToolTip": "Установить последнюю версию Microsoft Visual C++ Redistributable Packages x86, x64",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)."
+        "Tag": "2015_2022_x86",
+        "ToolTip": "Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 x86."
+      },
+      "One": {
+        "Tag": "2015_2022_x64",
+        "ToolTip": "Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 x64."
       }
     }
   },
   {
     "Region": "System",
-    "Function": "InstallDotNetRuntimes -Runtimes",
-    "ToolTip": "Установить последнюю версию .NET Desktop Runtime 6, 8 x64.",
+    "Function": "Install-DotNetRuntimes -Runtimes",
+    "ToolTip": "Установить последнюю версию .NET Desktop Runtime 8, 9 x64.",
     "Arg": {
       "Zero": {
-        "Tag": "NET6x64",
-        "ToolTip": ".NET Desktop Runtime 6 x64."
+        "Tag": "NET9x64",
+        "ToolTip": ".NET Desktop Runtime 8 x64."
       },
       "One": {
-        "Tag": "NET8x64",
-        "ToolTip": ".NET Desktop Runtime 8 x64."
+        "Tag": "NET9x64",
+        "ToolTip": ".NET Desktop Runtime 9 x64."
       }
     }
   },
@@ -1416,20 +1393,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "SATADrivesRemovableMedia",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач."
-      },
-      "One": {
-        "Tag": "Default",
-        "ToolTip": "Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)."
       }
     }
   },
@@ -1601,16 +1564,6 @@
       "One": {
         "Tag": "Enable",
         "ToolTip": "Включить советы Xbox Game Bar (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Gaming",
-    "Function": "Set-AppGraphicsPerformance",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Выбрать приложение и установить для него параметры производительности графики на \"Высокая производительность\". Только при наличии внешней видеокарты."
       }
     }
   },
@@ -1822,11 +1775,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Включить Windows Sandbox."
+        "ToolTip": "Включить Windows Sandbox. Применимо только к редакциям Professional, Enterprise и Education."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Выключить Windows Sandbox (значение по умолчанию)."
+        "ToolTip": "Выключить Windows Sandbox (значение по умолчанию). Применимо только к редакциям Professional, Enterprise и Education."
       }
     }
   },
@@ -2042,7 +1995,7 @@
   },
   {
     "Region": "Update Policies",
-    "Function": "UpdateLGPEPolicies",
+    "Function": "ScanRegistryPolicies",
     "Arg": {
       "Zero": {
         "Tag": "",

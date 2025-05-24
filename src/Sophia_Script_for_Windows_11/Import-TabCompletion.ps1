@@ -1,16 +1,16 @@
 ﻿<#
 	.SYNOPSIS
-	The TAB completion for functions and their arguments
+	Enable tab completion to invoke for functions if you do not know function name
 
-	Version: 6.7.3
-	Date: 28.11.2024
+	Version: 6.8.6
+	Date: 09.05.2025
 
-	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
+	Copyright (c) 2014—2025 Team Sophia
 
 	Thanks to all https://forum.ru-board.com members involved
 
 	.DESCRIPTION
-	Dot source the script first: . .\Function.ps1 (with a dot at the beginning)
+	Dot source the script first: . .\Import-TabCompletion.ps1 (with a dot at the beginning)
 	Start typing any characters contained in the function's name or its arguments, and press the TAB button
 
 	.EXAMPLE
@@ -49,12 +49,27 @@ function Sophia
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.7.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.8.6 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
-Remove-Module -Name Sophia -Force -ErrorAction Ignore
-Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
+Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
+Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
 
 Import-LocalizedData -BindingVariable Global:Localization -FileName Sophia -BaseDirectory $PSScriptRoot\Localizations
+
+# Checking if function wasn't dot-sourced, but called explicitly
+# ".\Import-TabCompletion.ps1" instead of ". .\Import-TabCompletion.ps1"
+if ($MyInvocation.Line -ne ". .\Import-TabCompletion.ps1")
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message $Localization.NotDotSourced
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions" -Verbose
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	exit
+}
 
 # The mandatory checks. Please, do not comment out this function
 InitialActions
@@ -73,7 +88,7 @@ $Parameters = @{
 		)
 
 		# Get functions list with arguments to complete
-		$Commands = (Get-Module -Name Sophia).ExportedCommands.Keys
+		$Commands = (Get-Module -Name SophiaScript).ExportedCommands.Keys
 		foreach ($Command in $Commands)
 		{
 			$ParameterSets = (Get-Command -Name $Command).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}
@@ -140,8 +155,32 @@ $Parameters = @{
 				}
 			}
 
-			# If a module command is InstallDotNetRuntimes
-			if ($Command -eq "InstallDotNetRuntimes")
+			# If a module command is Install-VCRedist
+			if ($Command -eq "Install-VCRedist")
+			{
+				# Get all command arguments, excluding defaults
+				foreach ($ParameterSet in $ParameterSets.Name)
+				{
+					# If an argument is Redistributables
+					if ($ParameterSet -eq "Redistributables")
+					{
+						$ValidValues = ((Get-Command -Name Install-VCRedist).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
+						foreach ($ValidValue in $ValidValues)
+						{
+							# The "Install-VCRedist -Redistributables <function>" construction
+							"Install-VCRedist" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						}
+
+						# The "Install-VCRedist -Redistributables <functions>" construction
+						"Install-VCRedist" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+					}
+
+					continue
+				}
+			}
+
+			# If a module command is Install-DotNetRuntimes
+			if ($Command -eq "Install-DotNetRuntimes")
 			{
 				# Get all command arguments, excluding defaults
 				foreach ($ParameterSet in $ParameterSets.Name)
@@ -149,15 +188,15 @@ $Parameters = @{
 					# If an argument is Runtimes
 					if ($ParameterSet -eq "Runtimes")
 					{
-						$ValidValues = ((Get-Command -Name InstallDotNetRuntimes).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
+						$ValidValues = ((Get-Command -Name Install-DotNetRuntimes).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
 						foreach ($ValidValue in $ValidValues)
 						{
-							# The "InstallDotNetRuntimes -Runtimes <function>" construction
-							"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+							# The "Install-DotNetRuntimes -Runtimes <function>" construction
+							"Install-DotNetRuntimes" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 						}
 
-						# The "InstallDotNetRuntimes -Runtimes <functions>" construction
-						"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						# The "Install-DotNetRuntimes -Runtimes <functions>" construction
+						"Install-DotNetRuntimes" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 					}
 
 					continue

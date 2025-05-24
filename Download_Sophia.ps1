@@ -12,7 +12,22 @@ Clear-Host
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Remove-Variable * -ErrorAction Ignore
+# Checking whether the logged-in user is an admin
+$CurrentUserName = (Get-CimInstance -ClassName Win32_Process -Filter ProcessId=$PID | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
+$LoginUserName = (Get-CimInstance -ClassName Win32_Process -Filter "name='explorer.exe'" | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
+
+if ($CurrentUserName -ne $LoginUserName)
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message "The logged-on user doesn't have admin rights."
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	pause
+	exit
+}
 
 if ($Host.Version.Major -eq 5)
 {
@@ -21,11 +36,35 @@ if ($Host.Version.Major -eq 5)
 	$Script:ProgressPreference = "SilentlyContinue"
 }
 
+# https://github.com/PowerShell/PowerShell/issues/21070
+$Script:CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+$Script:CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new($env:TEMP, $false)
+$Script:CompilerParameters.GenerateInMemory = $true
+
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/farag2/Sophia-Script-for-Windows/releases/latest"
 	UseBasicParsing = $true
 }
 $LatestGitHubRelease = (Invoke-RestMethod @Parameters).tag_name
+
+if (-not $LatestGitHubRelease)
+{
+	Write-Warning -Message "https://api.github.com/repos/farag2/Sophia-Script-for-Windows/releases/latest is unreachable. Please fix connection or change your DNS records."
+	Write-Information -MessageData "" -InformationAction Continue
+
+	if ((Get-CimInstance -ClassName CIM_ComputerSystem).HypervisorPresent)
+	{
+		$DNS = (Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
+	}
+	else
+	{
+		$DNS = (Get-NetAdapter -Physical | Get-NetIPInterface -AddressFamily IPv4 | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
+	}
+	Write-Warning -Message "Your DNS are $(if ($DNS.Count -gt 1) {$DNS -join ', '} else {$DNS})"
+
+	pause
+	exit
+}
 
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 
@@ -132,7 +171,7 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 			$Version = "Windows_10_PowerShell_7"
 		}
 	}
-	{$_ -ge 22631}
+	{$_ -ge 26100}
 	{
 		# Check for Windows 11 LTSC 2024
 		if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName) -notmatch "LTSC 2024")
@@ -194,12 +233,29 @@ if (-not (Test-Path -Path "$DownloadsFolder\Sophia.Script.zip"))
 	exit
 }
 
-$Parameters = @{
-	Path            = "$DownloadsFolder\Sophia.Script.zip"
-	DestinationPath = "$DownloadsFolder"
-	Force           = $true
+try
+{
+	$Parameters = @{
+		Path            = "$DownloadsFolder\Sophia.Script.zip"
+		DestinationPath = "$DownloadsFolder"
+		ErrorAction     = "Stop"
+		Force           = $true
+	}
+	Expand-Archive @Parameters
 }
-Expand-Archive @Parameters
+catch
+{
+	Write-Verbose -Message "Archive cannot be expanded. Probably, this was caused by your antivirus. Please update its definitions and try again." -Verbose
+
+	# Check for updates
+	Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
+
+	# Open t"Windows Update" page
+	Start-Process -FilePath "ms-settings:windowsupdate"
+
+	pause
+	exit
+}
 
 Remove-Item -Path "$DownloadsFolder\Sophia.Script.zip" -Force
 
@@ -272,10 +328,6 @@ switch ($Version)
 	}
 }
 
-# https://github.com/PowerShell/PowerShell/issues/21070
-$CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
-$CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new($env:TEMP, $false)
-$CompilerParameters.GenerateInMemory = $true
 $Signature = @{
 	Namespace          = "WinAPI"
 	Name               = "ForegroundWindow"

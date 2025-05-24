@@ -5,6 +5,160 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.20.6 | 6.8.56 — 09.05.2025
+
+* Updated Readme;
+* Removed `StartAccountNotifications` function for Windows 10;
+* Improved `CABInstallContext` function;
+* Fixed `Export-Associations` function;
+* Fixed `UninstallPCHealthCheck` function;
+* Added package for Windows 11 (PowerShell 5.1) to [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/t/TeamSophia/SophiaScript)
+  * The command downloads only `Windows 11 (PowerShell 5.1)` archive to your `Downloads` folder unlike the `Chocolatey` [script](#download-via-chocolatey) and expands it.
+
+```powershell
+# Install Sophia Script and expand it to Downloads folder
+$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+winget install --id TeamSophia.SophiaScript --location $DownloadsFolder --accept-source-agreements --force
+
+# Uninstall Sophia Script
+winget uninstall --id TeamSophia.SophiaScript --force
+```
+
+* Minor changes.
+
+## Wrapper 2.7.16
+
+![Безымянный](https://github.com/user-attachments/assets/dd3ed870-6ee5-4738-94a4-6bbd866be3a2)
+
+* Improved UI;
+* Fixed JSONs
+* Refactor, changed Manifest file name from Sophia.psd1 to SophiaScript.psd1
+* Fixed control 'cmbcmb' renamed to 'cmbs' which is used for 'UserFolders' in Windows 10
+* Autosave feature added: saves to Sophia Script folder after 5 mins to a file called 'autosave.ps1'
+* JSON created for Wrapper to change setting in wrapper
+* 'Presets' translation so put back menu translations for 'Presets', Fixed 'Set-Association' - Can add association to textboxes even when the '+/Plus' button has not been pressed yet. It adds a spot for you. Before it crashed the whole program when pressing 'Save'.
+
+## 5.20.5 | 6.8.5 — 18.04.2025
+
+* CI/CD configs refactored;
+* Functions.ps1 renamed into Import-TabCompletion.ps1 to not mislead users what is [this file for](https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions);
+  * Closes #622
+* Minor changes.
+
+Thanks to @gtumanyan
+
+## 5.20.4 | 6.8.4 — 05.04.2025
+
+* Code refactoring;
+* Renamed `UpdateLGPEPolicies` function into `ScanRegistryPolicies`;
+  * The function was improved and re-written.
+* Removed `PeopleTaskbar` function for `Windows 10`;
+* Fixed `Show-menu` function for make a selection in an interective menu;
+* Got an access to Chocolatey `sophia` package;
+  * All choco installer re-written;
+  * The command will download and expand the latest Sophia Script archive (without running) according which Windows it is run on. If you run it on Windows 11, it will download Sophia Script for Windows 11. For PowerShell 5.1 by default is not otherwise specified.
+
+```powershell
+# Download a PowerShell 5.1 version of Sophia Script by default
+choco install sophia --force -y
+
+# Download a PowerShell 7 version of Sophia Script
+choco install sophia --params "/PS7" --force -y
+```
+
+* Added `MeetNow` function for `Windows 10 x64 Enterprise LTSC 2021`
+* Minor changes.
+
+Thanks to @gtumanyan, @lowl1f3, nikolay7v, @ryandunton
+
+## Wrapper 2.7.13
+
+* Refactor mostly to JSON (Basically done)
+* Add changes to translations in 'tag.json' like None, ShowMorePins, ShowMoreRecommendations, SearchIconLabel
+* Imported LTSC versions have red colored tab icon and text to show which tab is disabled. Donation to Sophia (1. ko-fi, 2. Boosty).
+
+## 5.20.3 | 6.8.3 — 06.02.2025
+
+* Для российских пользователей мы создали страницу на Boosty: <https://boosty.to/teamsophia>;
+  * Если вам нравится наш проект, вы можете пожертвовать.
+
+![Безымянный](https://github.com/user-attachments/assets/da352591-f126-4f07-a453-1ad2a44a5102)
+
+* Changed Comss DNS records to `83.220.169.155` and `212.109.195.93` according to <https://www.comss.ru/page.php?id=7315>
+  * Please re-apply `DNSoverHTTPS -ComssOneDNS` function.
+* Small fix for `Cursors` function.
+  * Please re-apply `Cursors -Dark` or `Cursors -Light` function.
+* Fixed `Install-VCRedist` not detecting installed version correctly; 
+* Minor changes.
+
+Thanks to iGor202512, mogbi, and homeless
+
+## Wrapper 2.7.11
+
+* Moved `Set-ConsoleFont.ps1` to Wrapper's `Config` folder;
+* Name change "Install-VCRedist -Redistributables" support and 'main' tooltip in Localizations for all languages. Install-DotNetRuntimes -Runtimes name change support.
+
+## 5.20.2 | 6.8.2 — 26.01.2025
+
+* Closed #605 as fixed;
+* Due to Wrapper fails to load Consolas font, I added a new `Private\Set-ConsoleFont.ps1` script to make it forcibly do that, unless a Sophia Script logo in console is distored;
+* Minor changes.
+
+## Wrapper 2.7.9
+
+* Fixed Bugs: Fix order of functions in System Region.
+
+## 5.20.1 | 6.8.1 — 19.01.2025
+
+* Added a tutorial video how to run the specific function(s) via `Import-TabCompletion.ps1` script;
+  * <https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions>
+* Updated cursor pack for `Cursor` function up to the latest available version from <https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356>;
+* Changed names for functions, having added parameter values to choose:
+  * `Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64`
+  * `Install-DotNetRuntimes -Runtimes NET8x64, NET9x64`
+* `StartRecommendedSection` function now supports all Windows editions except `Home` one;
+* `UnpinTaskbarShortcuts` function now supports new `Outlook` argument value;
+* Added `EditWithPaintContext` function for only `Windows 11` to hide/show "Edit with Paint" item from the media files context menu;
+* Minor changes.
+
+Thanks to WindR and homeless
+
+## Wrapper 2.7.8
+
+* Fixed bugs: .NET Runtimes options cutting off.
+
+## 5.20.0 | 6.8.0 — 29.12.2024
+
+***
+
+Happy New Year. Team Sophia wishes you the best in the coming year. Hopefully, in a few months we can release the first public preview of `SophiApp 2.0`. 
+
+![deds](https://github.com/user-attachments/assets/601fd302-92da-4898-80f3-31c8fc324dff)
+
+***
+
+* Code refactoring continues;
+* Changed DNS records for `Comss.one DNS to `195.133.25.16`, `195.133.25.99`. Applicable for Russia only;
+* `StorageSenseTempFiles` & `StorageSenseFrequency` functions merged into one `StorageSense`;
+* Added checkings for `InstallVCRedist` function whether the latest VC Redistributable packages were already installed to skip downloding them;
+* Added checkings for `InstallDotNetRuntimes` function whether the latest .NET 8 and 9 installed;
+  * Moved to .NET 8 & 9. 
+* Now before configuring any functions related function olicies will be reset in order to avoid situations when a user has a blocked UI features due to harmful tweaks usage.
+  * E.g. before `RecycleBinDeleteConfirmation` function will be applied `ConfirmFileDelete` policy will be reset via LGPO.
+* Fixed `UpdateMicrosoftProducts` function for Windows 11;
+  * Please re-apply using this manual: https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions
+* Minor changes;
+* Fixed and improved translations;
+
+Thanks to A5, l1ghtovskiy, DirtBikeChad, and Rahul Setia.
+
+# Wrapper 2.7.7
+
+* Code refactoring;
+* Renamed variable for messagebox saying imported ps1 script needs to be in Sophia Script folder;
+* Fixed LTSC loading differences;
+* Fixed crashing because of StorageSense option, Refactor, CheckFileExists uses entire path internally
+
 ## 5.19.3 | 6.7.3 — 28.11.2024
 
 * Code refactoring;
@@ -88,7 +242,7 @@ The imported .ps1 file must be in Sophia Script folder.
 ## 5.18.7 | 6.6.7 — 12.06.2024
 
 * Fixed `CleanupTask -Register` function not working due to a typo;
-  * Please re-create it via invoking `. .\Functions.ps1` (with a dot at the beginning) method.
+  * Please re-create it via invoking `. .\Import-TabCompletion.ps1` (with a dot at the beginning) method.
 * Removed `CommandLineProcessAudit` and `Install-WSA` as WSA support is deprecated;
 * Improved `EventViewerCustomView -Disable` function;
 * Fixed typos;
@@ -117,7 +271,7 @@ Closed #576
   * Start icon positions are stored in a binary obfuscated JSON file that changes with every update. `$env:LOCALAPPDATA\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin`, and it's changed with every update;
   * Take a look at https://gist.github.com/rad1ke/d8c4121931633eca04ca625d09ff1a11#file-windows-11-setup-ps1-L42 if you're interested in the function.
 * Fixed `Cursors` function;
-  * Please re-run it by using `. .\Functions.ps1` module
+  * Please re-run it by using `. .\Import-TabCompletion.ps1` module
 * Added a warning for `Set-Association` function: `.pdf` and `http/https` protocols will be skipped;
   * Microsoft has blocked write access to UserChoice key for .pdf extention and http/https protocols with KB5034765 and KB5034763 for Windows 11 and Windows 10 respectively.
 * `RKNBypass` updated;
@@ -229,7 +383,7 @@ With best wishes for a happy New Year from `Team Sophia` ![img](https://forum.ru
 
 * The `InitialActions` function simplified;
 * Fixed bug in `TempTask` when `$env:SystemDrive\Recovery` folder wasn't removed;
-  * Just in case re-create `Temp` scheduled task via `. .\Functions.ps1` [method](https://github.com/farag2/Sophia-Script-for-Windows#how-to-run-the-specific-functions).
+  * Just in case re-create `Temp` scheduled task via `. .\Import-TabCompletion.ps1` [method](https://github.com/farag2/Sophia-Script-for-Windows#how-to-run-the-specific-functions).
   * Thanks to `linchel23`.
 * Added `CopilotButton` function for `Windows 10` to hide ot show Copilot button on the taskbar as Windows starts supporting it with the latest available build;
 * Added `WindowsLatestUpdate` function for `Windows 10` to let user get Windows updates as soon as they're available for your device as Windows starts supporting it with the latest available build;
@@ -419,7 +573,7 @@ Thanks to frost_tg for bug reporting
 
   ```powershell
   # With dot at the beginning
-  . .\Functions.ps1
+  . .\Import-TabCompletion.ps1
 
   Sophia -Functions "CleanupTask -Register", "SoftwareDistributionTask -Register", "TempTask -Register"
   ```
@@ -1350,8 +1504,8 @@ Diff from v5.9
 * Calling the specific function was completely rewritten! :rocket:
   * Added the <kbd>Tab</kbd> functions autocompletion by typing its' first letters
     https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-a19b-2cf80d5d2751.mp4
-  * The code from moved to the `Functions.ps1` file;
-  * If you want to call the specific function you need to [dot source](https://docs.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator-) the `Functions.ps1` first
+  * The code from moved to the `Import-TabCompletion.ps1` file;
+  * If you want to call the specific function you need to [dot source](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator-) the `Import-TabCompletion.ps1` first
 
     ```powershell
     # With a dot at the beginning

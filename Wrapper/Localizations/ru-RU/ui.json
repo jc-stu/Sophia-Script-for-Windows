@@ -5,14 +5,18 @@
       "menuImportExportPreset": "Импорт | экспорт",
       "menuImportPreset": "Импортировать пресет",
       "menuExportPreset": "Экспортировать пресет",
+      "menuAutosave": "Автосохранение",
       "menuPresets": "Пресеты",
       "menuOpposite": "Противоположные значения",
       "menuClear": "Очистить",
+      "menuClearTab": "Очистить вкладку",
+      "menuClearEverything": "Очистить все",
       "menuTheme": "Тема",
       "menuThemeDark": "Тёмная",
       "menuThemeLight": "Светлая",
       "menuLanguage": "Язык",
-      "menuAbout": "О программе"
+      "menuAbout": "О программе",
+      "menuDonate": "Пожертвовать"
     }
   },
   {
@@ -67,12 +71,12 @@
     "Options": {
       "messageBoxNewWrapperFound": "Обнаружена новая версия Wrapper.\nОткрыть страницу GitHub?",
       "messageBoxNewSophiaFound": "Обнаружена новая версия Sophia Script.\nОткрыть страницу GitHub?",
+      "messageBoxPS1FileHasToBeInFolder": "Пресет-файлл Sophia.ps1 должен находиться в папке Sophia Script.",
       "messageBoxDoesNotExist": "не существует.",
       "messageBoxPresetNotComp": "Пресет не совместим!",
       "messageBoxFilesMissingClose": "Отсутствуют необходимые файлы Sophia Script Wrapper. Программа будет закрыта.",
       "messageBoxConsoleEmpty": "Консоль пуста.\nНажмите кнопку \"Обновить консоль\", чтобы создать скрипт согласно вышему выбору.",
-      "messageBoxPowerShellVersionNotInstalled": "Выбранная вами версия PowerShell не установлена.",
-      "messageBoxMaybeFilesNotUnzippedProperly": "Возможно, файлы не разархивированы должным образом."
+      "messageBoxPowerShellVersionNotInstalled": "Выбранная вами версия PowerShell не установлена."
     }
   },
   {

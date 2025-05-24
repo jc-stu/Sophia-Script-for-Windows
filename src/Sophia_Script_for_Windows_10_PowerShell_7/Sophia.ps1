@@ -2,11 +2,16 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 (PowerShell 7)"
 
-	Version: 5.19.3
-	Date: 28.11.2024
+	.VERSION
+	5.20.6
 
-	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
+	.DATE
+	09.05.2025
 
+	.COPYRIGHT
+	(c) 2014—2025 Team Sophia
+
+	.THANKS
 	Thanks to all https://forum.ru-board.com members involved
 
 	.DESCRIPTION
@@ -23,6 +28,9 @@
 	.EXAMPLE Download and expand the latest Sophia Script version archive (without running) according which Windows and PowerShell versions it is run on
 	iwr script.sophia.team -useb | iex
 
+	.EXAMPLE The command will download and expand the latest Sophia Script archive (without running) from the last commit available according which Windows and PowerShell versions it is run on
+	iwr sl.sophia.team -useb | iex
+
 	.NOTES
 	Supported Windows 10 versions
 	Version: 22H2
@@ -30,8 +38,8 @@
 	Architecture: x64
 
 	.NOTES
-	To use the TAB completion for functions and their arguments dot source the Functions.ps1 script first:
-		. .\Function.ps1 (with a dot at the beginning)
+	To use Enable tab completion to invoke for functions if you do not know function name dot source the Import-TabCompletion.ps1 script first:
+		. .\Import-TabCompletion.ps1 (with a dot at the beginning)
 	Read more at https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions
 
 	.LINK GitHub
@@ -50,14 +58,14 @@
 	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-10-windows-11-5-17-8-6-5-8-x64-2023.81675/
 	https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/
 
-	.LINK Authors
+	.LINK
 	https://github.com/farag2
 	https://github.com/Inestic
 	https://github.com/lowl1f3
 #>
 
 #Requires -RunAsAdministrator
-#Requires -Version 7.4
+#Requires -Version 7.5
 
 [CmdletBinding()]
 param
@@ -69,7 +77,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.19.3 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.6 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -86,7 +94,7 @@ $ScriptFiles = @(
 	"$PSScriptRoot\Localizations\uk-UA\Sophia.psd1",
 	"$PSScriptRoot\Localizations\zh-CN\Sophia.psd1",
 	"$PSScriptRoot\Module\Sophia.psm1",
-	"$PSScriptRoot\Manifest\Sophia.psd1"
+	"$PSScriptRoot\Manifest\SophiaScript.psd1"
 )
 if (($ScriptFiles | Test-Path) -contains $false)
 {
@@ -100,7 +108,7 @@ if (($ScriptFiles | Test-Path) -contains $false)
 	exit
 }
 
-Remove-Module -Name Sophia -Force -ErrorAction Ignore
+Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
 
 # PowerShell 7 doesn't load en-us localization automatically if there is no localization folder in user's language which is determined by $PSUICulture
 # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/import-localizeddata?view=powershell-7.3
@@ -117,17 +125,22 @@ catch
 # Checking whether script is the correct PowerShell version
 try
 {
-	Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force -ErrorAction Stop
+	Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force -ErrorAction Stop
 }
 catch [System.InvalidOperationException]
 {
-	Write-Warning -Message $Localization.UnsupportedPowerShell
+	Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
 
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 	exit
 }
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Preset configuration starts here
+# Отсюда начинается настройка пресета
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 <#
 	.SYNOPSIS
@@ -295,14 +308,6 @@ BingSearch -Disable
 # Enable Bing search in Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
-
-# Do not show Microsoft account-related notifications on Start Menu in Start menu
-# Не показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft
-StartAccountNotifications -Hide
-
-# Show Microsoft account-related notifications on Start Menu in Start menu (default value)
-# Переодически показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft (значение по умолчанию)
-# StartAccountNotifications -Show
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
@@ -396,6 +401,7 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide user folders in "This PC"
 # Скрыть пользовательские папки в "Этот компьютер"
+UserFolders -ThreeDObjects Hide
 # UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
 # Show user folders in "This PC" (default value)
@@ -461,14 +467,6 @@ NewsInterests -Disable
 # Enable "News and Interests" on the taskbar (default value)
 # Включить "Новости и интересы" на панели задач (значение по умолчанию)
 # NewsInterests -Enable
-
-# Hide People on the taskbar
-# Скрыть панель "Люди" на панели задач
-PeopleTaskbar -Hide
-
-# Show People on the taskbar (default value)
-# Отобразить панель "Люди" на панели задач (значение по умолчанию)
-# PeopleTaskbar -Show
 
 # Hide the Meet Now icon in the notification area
 # Скрыть иконку "Провести собрание" в области уведомлений
@@ -610,12 +608,14 @@ AeroShaking -Enable
 # При захвате заголовка окна и встряхивании не сворачиваются все остальные окна
 # AeroShaking -Disable
 
-# Download and install free dark "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
+# Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 Cursors -Dark
 
-# Download and install free light "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
+# Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 # Cursors -Light
 
 # Set default cursors
@@ -662,8 +662,8 @@ StorageSense -Enable
 # Выключить Контроль памяти (значение по умолчанию)
 # StorageSense -Disable
 
-# Disable hibernation. It isn't recommended to turn off for laptops
-# Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
+# Disable hibernation. Not recommended for laptops
+# Отключить режим гибернации. Не рекомендуется для ноутбуков
 Hibernation -Disable
 
 # Enable hibernate (default value)
@@ -776,16 +776,16 @@ WindowsLatestUpdate -Disable
 # Получайте последние обновления, как только они будут доступны
 # WindowsLatestUpdate -Enable
 
-# Set power plan on "High performance". It isn't recommended to turn on for laptops
-# Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
+# Set power plan on "High performance". Not recommended for laptops
+# Установить схему управления питанием на "Высокая производительность". Не рекомендуется для ноутбуков
 PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
 # PowerPlan -Balanced
 
-# Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
-# Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
+# Do not allow the computer to turn off the network adapters to save power. Not recommended for laptops
+# Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется для ноутбуков
 NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
@@ -801,7 +801,7 @@ InputMethod -English
 # InputMethod -Default
 
 <#
-	Change user folders location to the root of any drive using the interactive menu
+	Change user folders location to the root of any drive using an interactive menu
 	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
@@ -988,21 +988,13 @@ NetworkDiscovery -Enable
 #>
 UninstallPCHealthCheck
 
-<#
-	Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
-	Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
+# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
-	https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
-#>
-InstallVCRedist
-
-<#
-	Install the latest .NET Desktop Runtime 6, 8 x64
-	Установить последнюю версию .NET Desktop Runtime 6, 8 x64
-
-	https://dotnet.microsoft.com/en-us/download/dotnet
-#>
-InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
+# Install the latest .NET Desktop Runtime 8, 9 x64
+#Установить последнюю версию .NET Desktop Runtime 8, 9 x64
+Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
@@ -1022,20 +1014,12 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
 # PreventEdgeShortcutCreation -Disable
 
-# Prevent all internal SATA drives from showing up as removable media in the taskbar notification area
-# Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач
-SATADrivesRemovableMedia -Disable
-
-# Show up all internal SATA drives as removeable media in the taskbar notification area (default value)
-# Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)
-# SATADrivesRemovableMedia -Default
-
 # Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
-# Создавать копии реестра при перезагрузки ПК и создавать задание RegIdleBackup в Планировщике задания для управления последующими резервными копиями
+# Создавать копии реестра при перезагрузке ПК и задание RegIdleBackup в Планировщике для управления последующими резервными копиями
 # RegistryBackup -Enable
 
 # Do not back up the system registry to %SystemRoot%\System32\config\RegBack folder (default value)
-# Не создавать копии реестра при перезагрузки ПК (значение по умолчанию)
+# Не создавать копии реестра при перезагрузке ПК (значение по умолчанию)
 # RegistryBackup -Disable
 #endregion System
 
@@ -1072,12 +1056,12 @@ AppSuggestions -Hide
 	Valid shortcuts values: ControlPanel and DevicesPrinters
 
 	Закрепить на начальном экране следующие ярлыки: Панель управления, Устройства и принтеры
-	Валидные значения ярлыков: ControlPanel и DevicesPrinters
+	Доступные значения: ControlPanel и DevicesPrinters
 #>
 PinToStart -Tiles ControlPanel, DevicesPrinters
 
 # Unpin all tiles first and pin necessary ones
-# Открепить все ярлыки сначала и закрепить необходимые
+# Открепить все ярлыки и закрепить необходимые
 # PinToStart -UnpinAll -Tiles ControlPanel, DevicesPrinters
 
 # Unpin all the Start tiles
@@ -1150,10 +1134,6 @@ XboxGameTips -Disable
 # Enable Xbox Game Bar tips (default value)
 # Включить советы Xbox Game Bar (значение по умолчанию)
 # XboxGameTips -Enable
-
-# Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
-# Выбрать приложение и установить для него параметры производительности графики на "Высокая производительность". Только при наличии внешней видеокарты
-Set-AppGraphicsPerformance
 
 <#
 	Turn on hardware-accelerated GPU scheduling. Restart needed
@@ -1291,12 +1271,12 @@ SaveZoneInformation -Disable
 # Включить Windows Script Host (значение по умолчанию)
 # WindowsScriptHost -Enable
 
-# Enable Windows Sandbox
-# Включить Windows Sandbox
+# Enable Windows Sandbox. Applicable only to Professional, Enterprise and Education editions
+# Включить Windows Sandbox. Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Enable
 
-# Disable Windows Sandbox (default value)
-# Выключить Windows Sandbox (значение по умолчанию)
+# Disable Windows Sandbox (default value). Applicable only to Professional, Enterprise and Education editions
+# Выключить Windows Sandbox (значение по умолчанию). Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Disable
 
 <#
@@ -1432,14 +1412,9 @@ UseStoreOpenWith -Hide
 #endregion Context menu
 
 #region Update Policies
-<#
-	Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc)
-	This can take up to 30 minutes, depending on the number of policies created in the registry and your system resources
-
-	Отобразить все политики реестра (даже созданные вручную) в оснастке Редактора локальной групповой политики (gpedit.msc)
-	Это может занять до 30 минут в зависимости от количества политик, созданных в реестре, и мощности вашей системы
-#>
-# UpdateLGPEPolicies
+# Scan the Windows registry and display all policies (even created manually) in the Local Group Policy Editor snap-in (gpedit.msc)
+# Просканировать реестр и отобразить все политики (даже созданные вручную) в оснастке Редактора локальной групповой политики (gpedit.msc)
+# ScanRegistryPolicies
 #endregion Update Policies
 
 # Environment refresh and other neccessary post actions
