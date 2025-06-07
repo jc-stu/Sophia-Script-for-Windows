@@ -2926,6 +2926,61 @@ function FileExplorerRibbon
 
 <#
 	.SYNOPSIS
+	Duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Hide
+	Do not show duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Show
+	Show duplicate removable drives in File Explorer navigation pane
+
+	.EXAMPLE
+	DuplicateDrives -Hide
+
+	.EXAMPLE
+	DuplicateDrives -Show
+
+	.NOTES
+	Current user
+#>
+function DuplicateDrives
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	$RemovableDrivesPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}"
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			Remove-Item -Path $RemovableDrivesPath -Recurse -Force
+		}
+		"Show"
+		{
+			if (-not (Test-Path $RemovableDrivesPath)) {
+				New-Item -Path $RemovableDrivesPath -Force
+			}
+			Set-ItemProperty -Path $RemovableDrivesPath -Name "(Default)" -Value "Removable Drives" -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
 	The recycle bin files delete confirmation dialog
 
 	.PARAMETER Enable
@@ -5604,6 +5659,108 @@ function Win32LongPathLimit
 		"Enable"
 		{
 			New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Last access time of NTFS
+
+	.PARAMETER Disable
+	Disable last access time of NTFS
+
+	.PARAMETER Enable
+	Enable last access time of NTFS
+
+	.EXAMPLE
+	LastAccessTime -Disable
+
+	.EXAMPLE
+	LastAccessTime -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function LastAccessTime
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000001 -Force
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisableLastAccessUpdate" -Value 0x80000002 -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	8dot3 name creation of NTFS
+
+	.PARAMETER Disable
+	Disable 8dot3 name creation of NTFS
+
+	.PARAMETER Enable
+	Enable 8dot3 name creation of NTFS
+
+	.EXAMPLE
+	8dot3Name -Disable
+
+	.EXAMPLE
+	8dot3Name -Enable
+
+	.NOTES
+	Machine-wide
+#>
+function 8dot3Name
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Disable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 1
+		}
+		"Enable"
+		{
+			Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "NtfsDisable8dot3NameCreation" -Value 2
 		}
 	}
 }

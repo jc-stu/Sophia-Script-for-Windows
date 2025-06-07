@@ -2432,6 +2432,61 @@ function FileExplorerRibbon
 
 <#
 	.SYNOPSIS
+	Duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Hide
+	Do not show duplicate removable drives in File Explorer navigation pane
+
+	.PARAMETER Show
+	Show duplicate removable drives in File Explorer navigation pane
+
+	.EXAMPLE
+	DuplicateDrives -Hide
+
+	.EXAMPLE
+	DuplicateDrives -Show
+
+	.NOTES
+	Current user
+#>
+function DuplicateDrives
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	$RemovableDrivesPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}"
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			Remove-Item -Path $RemovableDrivesPath -Recurse -Force
+		}
+		"Show"
+		{
+			if (-not (Test-Path $RemovableDrivesPath)) {
+				New-Item -Path $RemovableDrivesPath -Force
+			}
+			Set-ItemProperty -Path $RemovableDrivesPath -Name "(Default)" -Value "Removable Drives" -Force
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
 	The recycle bin files delete confirmation dialog
 
 	.PARAMETER Enable
