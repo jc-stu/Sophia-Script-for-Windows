@@ -300,6 +300,14 @@ OpenFileExplorerTo -ThisPC
 # Свернуть ленту проводника (значение по умолчанию)
 FileExplorerRibbon -Minimized
 
+# Do not show duplicate removable drives in File Explorer navigation pane
+# 导航栏不显示重复的可移动硬盘
+DuplicateDrives -Hide
+
+# Show duplicate removable drives in File Explorer navigation pane (default value)
+# 导航栏显示重复的可移动硬盘（默认值）
+# DuplicateDrives -Show
+
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
 # SnapAssist -Disable
@@ -326,7 +334,8 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide user folders in "This PC"
 # Скрыть пользовательские папки в "Этот компьютер"
-UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
+UserFolders -ThreeDObjects Hide
+# UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
 # Show user folders in "This PC" (default value)
 # Отобразить пользовательские папки в "Этот компьютер" (значение по умолчанию)
