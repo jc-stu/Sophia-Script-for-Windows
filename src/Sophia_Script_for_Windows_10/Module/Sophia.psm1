@@ -474,6 +474,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		exit
 	}
 
+<#
 	#region Defender checks
 	# Checking whether necessary Microsoft Defender components exists
 	$Files = @(
@@ -698,6 +699,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		}
 	}
 	#endregion Defender checks
+#>
 
 	# Check for a pending reboot
 	$PendingActions = @(
@@ -844,7 +846,7 @@ public extern static string BrandingFormatString(string sFormat);
 	# Detect Windows build version
 	switch ((Get-CimInstance -ClassName CIM_OperatingSystem).BuildNumber)
 	{
-		{$_ -ne 19045}
+		{$_ -lt 19041}
 		{
 			Write-Information -MessageData "" -InformationAction Continue
 			Write-Warning -Message ($Localization.UnsupportedOSBuild -f [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%"))
@@ -930,11 +932,13 @@ public extern static string BrandingFormatString(string sFormat);
 		Start-Process -FilePath "https://www.outsidethebox.ms/19318"
 	}
 
+<#
 	# Automatically manage paging file size for all drives
 	if (-not (Get-CimInstance -ClassName CIM_ComputerSystem).AutomaticManagedPageFile)
 	{
 		Get-CimInstance -ClassName CIM_ComputerSystem | Set-CimInstance -Property @{AutomaticManagedPageFile = $true}
 	}
+#>
 
 	# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 	# https://github.com/PowerShell/PowerShell/issues/21070
@@ -14550,6 +14554,66 @@ function ImagesEditContext
 		"Show"
 		{
 			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\edit -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	The "Edit" item in the text context menu
+
+	.PARAMETER Hide
+	Hide the "Edit" item from the text context menu
+
+	.PARAMETER Show
+	Show the "Edit" item in the text context menu
+
+	.EXAMPLE
+	TextEditContext -Hide
+
+	.EXAMPLE
+	TextEditContext -Show
+
+	.NOTES
+	Current user
+#>
+function TextEditContext
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	if ((Get-WindowsCapability -Online -Name "Microsoft.Windows.Notepad*").State -ne "Installed")
+	{
+		return
+	}
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			if (-not (Test-Path -Path Registry::HKEY_CLASSES_ROOT\SystemFileAssociations\text\shell\edit))
+			{
+				New-Item -Path Registry::HKEY_CLASSES_ROOT\SystemFileAssociations\text\shell\edit -Force
+			}
+			New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\SystemFileAssociations\text\shell\edit -Name ProgrammaticAccessOnly -PropertyType String -Value "" -Force
+		}
+		"Show"
+		{
+			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\SystemFileAssociations\text\shell\edit -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
 		}
 	}
 }

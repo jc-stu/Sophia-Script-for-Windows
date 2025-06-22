@@ -498,19 +498,19 @@ NotificationAreaIcons -Hide
 
 # Show seconds on the taskbar clock
 # Отобразить секунды в системных часах на панели задач
-SecondsInSystemClock -Show
+# SecondsInSystemClock -Show
 
 # Hide seconds on the taskbar clock (default value)
 # Скрыть секунды в системных часах на панели задач (значение по умолчанию)
-# SecondsInSystemClock -Hide
+SecondsInSystemClock -Hide
 
 # Combine taskbar buttons and always hide labels (default value)
 # Объединить кнопки панели задач и всегда скрывать метки (значение по умолчанию)
-TaskbarCombine -Always
+# TaskbarCombine -Always
 
 # Combine taskbar buttons and hide labels when taskbar is full
 # Объединить кнопки панели задач и скрывать метки при переполнении панели задач
-# TaskbarCombine -Full
+TaskbarCombine -Full
 
 # Combine taskbar buttons and never hide labels
 # Объединить кнопки панели задач и никогда не скрывать метки
@@ -522,7 +522,7 @@ UnpinTaskbarShortcuts -Shortcuts Edge, Store, Mail
 
 # View the Control Panel icons by large icons
 # Просмотр иконок Панели управления как: крупные значки
-ControlPanelView -LargeIcons
+# ControlPanelView -LargeIcons
 
 # View the Control Panel icons by small icons
 # Просмотр иконок Панели управления как: маленькие значки
@@ -530,7 +530,7 @@ ControlPanelView -LargeIcons
 
 # View the Control Panel icons by category (default value)
 # Просмотр иконок Панели управления как: категория (значение по умолчанию)
-# ControlPanelView -Category
+ControlPanelView -Category
 
 # Set the default Windows mode to dark
 # Установить режим Windows по умолчанию на темный
@@ -590,11 +590,11 @@ ShortcutsSuffix -Disable
 
 # Use the Print screen button to open screen snipping
 # Использовать кнопку PRINT SCREEN, чтобы запустить функцию создания фрагмента экрана
-PrtScnSnippingTool -Enable
+# PrtScnSnippingTool -Enable
 
 # Do not use the Print screen button to open screen snipping (default value)
 # Не использовать кнопку PRINT SCREEN, чтобы запустить функцию создания фрагмента экрана (значение по умолчанию)
-# PrtScnSnippingTool -Disable
+PrtScnSnippingTool -Disable
 
 # Let me use a different input method for each app window
 # Позволить выбирать метод ввода для каждого окна
@@ -774,11 +774,11 @@ RestartNotification -Show
 
 # Restart as soon as possible to finish updating
 # Перезапустить устройство как можно быстрее, чтобы завершить обновление
-RestartDeviceAfterUpdate -Enable
+# RestartDeviceAfterUpdate -Enable
 
 # Don't restart as soon as possible to finish updating (default value)
 # Не перезапускать устройство как можно быстрее, чтобы завершить обновление (значение по умолчанию)
-# RestartDeviceAfterUpdate -Disable
+RestartDeviceAfterUpdate -Disable
 
 # Automatically adjust active hours for me based on daily usage
 # Автоматически изменять период активности для этого устройства на основе действий
@@ -1352,19 +1352,27 @@ ShareContext -Hide
 
 # Hide the "Edit with Paint 3D" item from the media files context menu
 # Скрыть пункт "Изменить с помощью Paint 3D" из контекстного меню медиа-файлов
-EditWithPaint3DContext -Hide
+# EditWithPaint3DContext -Hide
 
 # Show the "Edit with Paint 3D" item in the media files context menu (default value)
 # Отобразить пункт "Изменить с помощью Paint 3D" в контекстном меню медиа-файлов (значение по умолчанию)
-# EditWithPaint3DContext -Show
+EditWithPaint3DContext -Show
 
 # Hide the "Edit" item from the images context menu
 # Скрыть пункт "Изменить" из контекстного меню изображений
-ImagesEditContext -Hide
+# ImagesEditContext -Hide
 
 # Show the "Edit" item in images context menu (default value)
 # Отобразить пункт "Изменить" в контекстном меню изображений (значение по умолчанию)
-# ImagesEditContext -Show
+ImagesEditContext -Show
+
+# Hide the "Edit" item from the text context menu
+# 隐藏文本文件上下文菜单中的“编辑”项
+# TextEditContext -Hide
+
+# Show the "Edit" item in images context menu (default value)
+# 显示文本文件上下文菜单中的“编辑”项（默认值）
+TextEditContext -Show
 
 # Hide the "Print" item from the .bat and .cmd context menu
 # Скрыть пункт "Печать" из контекстного меню .bat и .cmd файлов
